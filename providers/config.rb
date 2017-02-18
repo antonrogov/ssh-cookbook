@@ -3,7 +3,7 @@ action :add do
     code %{
       set -x
       if [[ $(cat /etc/ssh/sshd_config) =~ "#{new_resource.match}" ]]; then
-        sed -i "s/#*#{new_resource.match}.*/#{new_resource.string}/g" /etc/ssh/sshd_config
+        sed -i "s/^#*#{new_resource.match} .*$/#{new_resource.string}/g" /etc/ssh/sshd_config
       else
         echo -en "#{new_resource.string}\n" >> /etc/ssh/sshd_config
       fi
